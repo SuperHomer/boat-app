@@ -8,4 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Boat extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'image_path',
+    ];
+
+
+    /**
+     * Get all boats
+     *
+     * @return Boat[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getBoats() {
+        return Boat::all();
+    }
+
 }
