@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Boat;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class BoatApiController extends Controller
 {
+
+    private Boat $boat;
+
+    public function __construct()
+    {
+        $this->boat = new Boat();
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(Boat $boat): JsonResponse
+    public function index(): JsonResponse
     {
-        return response()->json($boat->getBoats());
+        return response()->json($this->boat->getBoats());
     }
 
     /**
@@ -27,9 +36,9 @@ class BoatApiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        return response()->json($this->boat->getBoat($id));
     }
 
     /**

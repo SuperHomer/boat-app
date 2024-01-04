@@ -30,4 +30,14 @@ class Boat extends Model
         return Boat::all();
     }
 
+    /**
+     * Get boat by id
+     *
+     * @param $id
+     * @return Boat
+     */
+    public function getBoat($id) {
+        return Boat::find($id);
+    }
+
 }
