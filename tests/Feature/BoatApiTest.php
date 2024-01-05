@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Boat;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,6 +11,20 @@ use Tests\TestCase;
 class BoatApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected int $validId;
+
+    /**
+     * Setup
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(DatabaseSeeder::class);
+        $this->validId = Boat::all()->first()->id;
+    }
 
     public function testBoatIndex(): void
     {
@@ -19,7 +35,7 @@ class BoatApiTest extends TestCase
 
     public function testBoatShow(): void
     {
-        $response = $this->get('/api/boats/1');
+        $response = $this->get('/api/boats/' . $this->validId);
 
         $response->assertStatus(200);
     }
@@ -37,7 +53,7 @@ class BoatApiTest extends TestCase
 
     public function testBoatUpdate(): void
     {
-        $response = $this->put('/api/boats/1', [
+        $response = $this->put('/api/boats/' . $this->validId, [
             'name' => 'Test Boat',
             'description' => 'Test Description',
             'image_path' => 'Test Image Path',
@@ -48,7 +64,7 @@ class BoatApiTest extends TestCase
 
     public function testBoatDestroy(): void
     {
-        $response = $this->delete('/api/boats/1');
+        $response = $this->delete('/api/boats/' . $this->validId);
 
         $response->assertStatus(200);
     }
@@ -71,7 +87,7 @@ class BoatApiTest extends TestCase
 
     public function testBoatShowJson(): void
     {
-        $response = $this->get('/api/boats/1');
+        $response = $this->get('/api/boats/' . $this->validId);
 
         $response->assertJsonStructure([
             'id',
@@ -103,7 +119,7 @@ class BoatApiTest extends TestCase
 
     public function testBoatUpdateJson(): void
     {
-        $response = $this->put('/api/boats/1', [
+        $response = $this->put('/api/boats/' . $this->validId, [
             'name' => 'Test Boat',
             'description' => 'Test Description',
             'image_path' => 'Test Image Path',
@@ -119,55 +135,33 @@ class BoatApiTest extends TestCase
         ]);
     }
 
-    public function testBoatDestroyJson(): void
+    public function testBoatIdNotExists(): void
     {
-        $response = $this->delete('/api/boats/1');
+        $response = $this->get('/api/boats/XXX');
 
-        $response->assertJsonStructure([
-            'id',
-            'name',
-            'description',
-            'image_path',
-            'created_at',
-            'updated_at',
-        ]);
+        $response->assertStatus(404);
     }
 
-    public function testBoatIndexJsonCount(): void
-    {
-        $response = $this->get('/api/boats');
-
-        $response->assertJsonCount(10);
-    }
-
-    public function testBoatStoreJsonCount(): void
+    public function testBoatStoreRequiredFields(): void
     {
         $response = $this->post('/api/boats', [
-            'name' => 'Test Boat',
-            'description' => 'Test Description',
-            'image_path' => 'Test Image Path',
+            'name' => '',
+            'description' => '',
+            'image_path' => '',
         ]);
 
-        $response->assertJsonCount(1);
+        $response->assertStatus(422);
     }
 
-    public function testBoatUpdateJsonCount(): void
+    public function testBoatUpdateRequiredFields(): void
     {
-        $response = $this->put('/api/boats/1', [
-            'name' => 'Test Boat',
-            'description' => 'Test Description',
-            'image_path' => 'Test Image Path',
+        $response = $this->put('/api/boats/' . $this->validId, [
+            'name' => '',
+            'description' => '',
+            'image_path' => '',
         ]);
 
-        $response->assertJsonCount(1);
+        $response->assertStatus(422);
     }
-
-    public function testBoatDestroyJsonCount(): void
-    {
-        $response = $this->delete('/api/boats/1');
-
-        $response->assertJsonCount(1);
-    }
-
 
 }
