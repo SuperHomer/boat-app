@@ -59,9 +59,6 @@ Optional, if you want to prepopulate the database:
 ./vendor/bin/sail php artisan migrate:refresh --seed
 ```
 
-To run the frontend, open a new terminal:
-
-
 ### Build frontend
 Install dependencies and run the frontend:
 ```bash
