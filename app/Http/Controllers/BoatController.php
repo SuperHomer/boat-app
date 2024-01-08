@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Boat;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class BoatController extends Controller
 {
+
+    private Boat $boat;
+
+    public function __construct()
+    {
+        $this->boat = new Boat();
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('boats.index');
     }
 
     /**
@@ -19,7 +28,7 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        return view('boats.create');
     }
 
     /**
@@ -27,7 +36,7 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('boats.index');
     }
 
     /**
@@ -35,8 +44,11 @@ class HomeController extends Controller
      */
     public function show(string $id)
     {
-        //
-        
+        $boat = $this->boat->getBoat($id);
+        if (blank($boat)) {
+            return abort(404);
+        }
+        return view('boats.show')->with('boat', $boat);
     }
 
     /**

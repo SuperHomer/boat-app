@@ -23,7 +23,7 @@
 </head>
 <body>
     <div id="app">
-        <boats />
+        <boat :boat="{{ $boat }}" />
     </div>
     <footer>
         <div>Copyright &copy; 2024 Yoan Marti</div>
