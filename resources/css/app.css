@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+.action {
+    padding: 10px;
+}
+.btn {
+    display: inline-block;
+    padding: 5px 10px;
+    border: solid 1px black;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0);
+    color: white;
+    text-decoration: none;
+    margin-right: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+.boat-img {
+    padding: 10px;
+    width: 50%;
+    border-radius: 20px;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: solid 1px black;
+    margin-bottom: 10px;
+}
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+.form {
+    width: 100%;
+    margin-bottom: 10px;
+    max-width: 500px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+    border-radius: 20px;
+    border: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

@@ -7,11 +7,21 @@ const boats = ref([])
 axios.get('/api/boats').then(response => {
     boats.value = response.data
 })
+
+
+function goToCreateBoat() {
+    window.location.href = '/boats/create';
+}
+
 </script>
 
 <template>
-  <div class="container">
-    <h1>Boats</h1>
+  <div class="">
+    <div class="header">
+        <h1>Boats list</h1>
+        <button class="btn" @click="goToCreateBoat()">Create boat +</button>
+    </div>
+    <br>
     <div class="card-zone">
         <a class="card-link" :href="'/boats/'+boat.id"  v-for="boat in boats" :key="boat.id">
             <div class="card">
@@ -27,14 +37,6 @@ axios.get('/api/boats').then(response => {
 </template>
 
 <style scoped>
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding-left: 10%;
-        padding-right: 10%;
-    }
     .card-zone {
         display: flex;
         flex-wrap: wrap;
@@ -53,10 +55,10 @@ axios.get('/api/boats').then(response => {
         height: 270px;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
         border-radius: 20px;
+        border: none;
     }
     .card-img {
         padding: 10px;
-        width: calc(100% - 20px);
         border-radius: 20px;
     }
     .card-content {
@@ -77,5 +79,27 @@ axios.get('/api/boats').then(response => {
         -webkit-line-clamp: 3; /* number of lines to show */
                 line-clamp: 3; 
         -webkit-box-orient: vertical;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 5px 10px;
+        border: solid 1px black;
+        border-radius: 5px;
+        background-color: rgba(0, 0, 0);
+        color: white;
+        text-decoration: none;
+        margin-right: 5px;
+        font-size: 0.8rem;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        opacity: 0.8;
     }
 </style>

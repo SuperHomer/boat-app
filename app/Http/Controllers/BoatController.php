@@ -13,6 +13,7 @@ class BoatController extends Controller
     public function __construct()
     {
         $this->boat = new Boat();
+        $this->middleware('auth');
     }
 
     /**
